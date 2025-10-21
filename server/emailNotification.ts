@@ -43,59 +43,88 @@ function fmtUSD(n: number): string {
 }
 
 export async function sendIntakeNotification(data: IntakeSubmissionData): Promise<boolean> {
-  const title = `New Insurance Intake: ${data.firstName} ${data.lastName}`;
+  const title = `🔔 New Insurance Intake Submission — ${data.firstName} ${data.lastName}`;
   
   const content = `
-**Client Information**
-Name: ${data.firstName} ${data.lastName}
-Email: ${data.email}
-Phone: ${data.phone || "(not provided)"}
-State: ${data.state}
-Age: ${data.age}
-Sex: ${data.sex}
+╔═══════════════════════════════════════════════════════════════╗
+  LIFE INSURANCE INTAKE SUBMISSION
+  Submitted: ${new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })} EST
+╚═══════════════════════════════════════════════════════════════╝
 
-**Coverage Details**
-Product Type: ${data.productType}${data.termYears ? ` (${data.termYears} years)` : ""}
-Coverage Amount: ${fmtUSD(data.coverage)}
-Annual Income: ${fmtUSD(data.annualIncome)}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  APPLICANT INFORMATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-**Physical Metrics**
-Height: ${data.heightIn} inches
-Weight: ${data.weightLb} lbs
-BMI: ${data.bmi}
+Full Name:        ${data.firstName} ${data.lastName}
+Email:            ${data.email}
+Phone:            ${data.phone || "Not provided"}
+State:            ${data.state}
+Age:              ${data.age} years
+Sex:              ${data.sex}
 
-**Health & Risk Factors**
-Tobacco Use: ${data.tobaccoUse}${data.tobaccoYears ? ` (${data.tobaccoYears} years since last use)` : ""}
-Uncontrolled Diabetes: ${data.uncontrolledDiabetes}
-Uncontrolled Hypertension: ${data.uncontrolledHypertension}
-Insulin Dependent: ${data.insulinDependent}
-COPD: ${data.copd}
-Hazardous Occupation: ${data.hazardousOccupation}
-Risky Avocation: ${data.avocationRisk}
-High-Risk Travel: ${data.travelHighRisk}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  COVERAGE REQUEST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-**Medical History**
-${data.cancerHistoryYears !== undefined && data.cancerHistoryYears !== null ? `Cancer Treatment: ${data.cancerHistoryYears} years ago` : ""}
-${data.heartEventYears !== undefined && data.heartEventYears !== null ? `Heart Event: ${data.heartEventYears} years ago` : ""}
-${data.duiYears !== undefined && data.duiYears !== null ? `DUI: ${data.duiYears} years ago` : ""}
-${data.felonyYears !== undefined && data.felonyYears !== null ? `Felony: ${data.felonyYears} years ago` : ""}
-${data.bankruptcyYears !== undefined && data.bankruptcyYears !== null ? `Bankruptcy: ${data.bankruptcyYears} years ago` : ""}
+Product Type:     ${data.productType}${data.termYears ? ` (${data.termYears}-year term)` : ""}
+Coverage Amount:  ${fmtUSD(data.coverage)}
+Annual Income:    ${fmtUSD(data.annualIncome)}
+Income Multiple:  ${(data.coverage / data.annualIncome).toFixed(1)}×
 
-**Medications**
-${data.medications || "(none listed)"}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  PHYSICAL PROFILE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-**Physicians**
-${data.doctorNames || "(none listed)"}
+Height:           ${data.heightIn} inches (${Math.floor(data.heightIn / 12)}' ${data.heightIn % 12}")
+Weight:           ${data.weightLb} lbs
+BMI:              ${data.bmi}
 
----
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  HEALTH & RISK ASSESSMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-**CARRIER ELIGIBILITY ANALYSIS**
+Tobacco Use:                ${data.tobaccoUse}${data.tobaccoYears !== undefined && data.tobaccoYears !== null ? ` (${data.tobaccoYears} years since cessation)` : ""}
+Uncontrolled Diabetes:      ${data.uncontrolledDiabetes}
+Uncontrolled Hypertension:  ${data.uncontrolledHypertension}
+Insulin Dependent:          ${data.insulinDependent}
+COPD:                       ${data.copd}
+Hazardous Occupation:       ${data.hazardousOccupation}
+High-Risk Avocation:        ${data.avocationRisk}
+High-Risk Travel:           ${data.travelHighRisk}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  MEDICAL & LEGAL HISTORY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+${data.cancerHistoryYears !== undefined && data.cancerHistoryYears !== null ? `Cancer Treatment:     ${data.cancerHistoryYears} years ago\n` : ""}${data.heartEventYears !== undefined && data.heartEventYears !== null ? `Cardiovascular Event: ${data.heartEventYears} years ago\n` : ""}${data.duiYears !== undefined && data.duiYears !== null ? `DUI Conviction:       ${data.duiYears} years ago\n` : ""}${data.felonyYears !== undefined && data.felonyYears !== null ? `Felony Conviction:    ${data.felonyYears} years ago\n` : ""}${data.bankruptcyYears !== undefined && data.bankruptcyYears !== null ? `Bankruptcy:           ${data.bankruptcyYears} years ago\n` : ""}${!data.cancerHistoryYears && !data.heartEventYears && !data.duiYears && !data.felonyYears && !data.bankruptcyYears ? "No significant medical or legal history disclosed.\n" : ""}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  MEDICATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+${data.medications && data.medications.trim() ? data.medications : "None disclosed"}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  PHYSICIANS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+${data.doctorNames && data.doctorNames.trim() ? data.doctorNames : "None disclosed"}
+
 
 ${data.carrierAnalysis}
 
----
 
-This intake was submitted via the online form and has been saved to the database.
+╔═══════════════════════════════════════════════════════════════╗
+  NEXT STEPS
+╚═══════════════════════════════════════════════════════════════╝
+
+1. Review carrier eligibility analysis above
+2. Identify best-fit carriers based on applicant profile
+3. Collect required documentation per carrier checklists
+4. Contact applicant at ${data.email} or ${data.phone || "(phone not provided)"}
+5. Proceed with formal application for selected carrier(s)
+
+This submission has been saved to the database for record-keeping.
+
 `;
 
   try {
