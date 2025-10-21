@@ -43,7 +43,7 @@ function fmtUSD(n: number): string {
 }
 
 export async function sendIntakeNotification(data: IntakeSubmissionData): Promise<boolean> {
-  const title = `🔔 New Insurance Intake Submission — ${data.firstName} ${data.lastName}`;
+  const title = `New Insurance Intake Submission - ${data.firstName} ${data.lastName}`;
   
   const content = `
 ╔═══════════════════════════════════════════════════════════════╗

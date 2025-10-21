@@ -171,6 +171,11 @@ export default function Home() {
               </li>
             </ul>
           </div>
+          <div className="mt-6 pt-6 border-t text-sm text-gray-600">
+            <p><strong>Your Licensed Agent:</strong> Daniel J Purdy</p>
+            <p><strong>Agency:</strong> VIP Group Financial</p>
+            <p><strong>Ohio Insurance License:</strong> #1581039</p>
+          </div>
         </motion.div>
       </div>
     );
@@ -280,6 +285,18 @@ export default function Home() {
               <p className="text-sm text-gray-700">
                 <strong>Privacy Notice:</strong> Your information is secure and will only be used to evaluate insurance options. 
                 We work with National Life Group, Mutual of Omaha, Ameritas, Lafayette Life, Transamerica, and American Amicable.
+              </p>
+            </div>
+            <div className="border-t pt-6 mt-6">
+              <p className="text-sm text-gray-600">
+                <strong>Licensed Agent:</strong> Daniel J Purdy<br />
+                <strong>Agency:</strong> VIP Group Financial<br />
+                <strong>Ohio Insurance License:</strong> #1581039<br />
+                <strong>State:</strong> Ohio
+              </p>
+              <p className="text-xs text-gray-500 mt-3">
+                This form is provided by a licensed insurance agent in the State of Ohio. 
+                All insurance products are subject to underwriting approval and state regulations.
               </p>
             </div>
           </div>
