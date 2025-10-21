@@ -1,0 +1,20 @@
+{
+  "query": "SELECT id, firstName, lastName, email, age, productType, coverage, createdAt FROM intake_submissions ORDER BY createdAt DESC LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4MzpgAwHjXaMjvK.fad9504136fc --database iTn5yHEvvRdPPkQVQJrm4s --execute SELECT id, firstName, lastName, email, age, productType, coverage, createdAt FROM intake_submissions ORDER BY createdAt DESC LIMIT 1;",
+  "rows": [
+    {
+      "id": "intake_1761067655172_g05gnlskw",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "test@example.com",
+      "age": "45",
+      "productType": "Term",
+      "coverage": "500000",
+      "createdAt": "2025-10-21 17:27:35"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tfirstName\tlastName\temail\tage\tproductType\tcoverage\tcreatedAt\nintake_1761067655172_g05gnlskw\tJohn\tDoe\ttest@example.com\t45\tTerm\t500000\t2025-10-21 17:27:35\n",
+  "stderr": "",
+  "execution_time_ms": 78
+}
